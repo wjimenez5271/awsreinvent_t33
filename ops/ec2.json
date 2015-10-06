@@ -27,10 +27,6 @@
       }
    },
    "Outputs" : {
-	  "BackupLoadBalancerDNSName" : {
-		"Description": "The DNSName of the backup load balancer",  
-		"Value" : { "Fn::GetAtt" : [ "TwilioEC2Instance", "DNSName" ]}
-	  },
 	  "TwilioInstanceID" : {
 		"Description": "The Instance ID",  
 		"Value" : { "Ref" : "TwilioEC2Instance" }
