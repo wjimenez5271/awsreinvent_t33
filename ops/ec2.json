@@ -16,10 +16,15 @@
 			} ],
     		"IamInstanceProfile" : "TwilioUser",
 			"Tags" : [
-				 {"Key" : "Name", "Value" : "TwilioInstance"}
+				 {"Key" : "Name", "Value" : "TwilioDavid"}
 				 , {"Key" : "Stack", "Value" : "Production"}
-			]
-         }
+			],
+        "UserData" : {"Fn::Base64" : {"Fn::Join" : ["", [
+            "#include\n",
+            "https://s3-eu-west-1.amazonaws.com/aFolder/myScript.sh \n"
+            ] ] } }
+		  }
       }
    }
 }
+
