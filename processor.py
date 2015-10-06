@@ -4,8 +4,7 @@ import db
 import queue
 
 
-
-def main():
+def main(event):
     pass
     # get new message from queue
     # lookup user
