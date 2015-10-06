@@ -1,11 +1,13 @@
-import db
 import uuid
 import db
 
 
 class Question(object):
-    def __init__(self, qstring):
-        self.qid = uuid.uuid4()
+    def __init__(self, qstring, qid=None):
+        if qid is None:
+            self.qid = uuid.uuid4()
+        else:
+            self.qid = qid
         self.qstring = qstring
         self.point_val = int
         self.answers = {"answer_key": "value"}
@@ -29,9 +31,14 @@ class Question(object):
         {"qid": self.qid,
          "qstring": self.qstring,
          "point_val": self.point_val,
-         "answers": self.answers
+         "answers": self.answers,
          "child_questions": self.child_questions,
          "last_updated": self.last_updated}, table_name='questions', overwrite=True)
+
+
+def get_question(qid):
+    r = db.get('questions', qid=qid)
+    return Question(r['qstring'], qid=qid)
 
 
 def process_question():
@@ -46,7 +53,7 @@ def write_question_to_db(question_string, question_answers, child_questions):
     new_question = Question(question_string)
     new_question.set_answers(question_answers)
     new_question.set_child_questions(child_questions)
+    new_question.write()
     return new_question.qid
-
 
 
