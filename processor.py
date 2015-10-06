@@ -6,6 +6,7 @@ import queue
 
 def main(event):
     pass
+    queue.get_queue()
     # get new message from queue
     # lookup user
     # process question
