@@ -14,7 +14,7 @@ def get_queue():
     events = queue.get_messages()
     if len(events) == 0:
         print "Nothing to do. Bye."
-    for event in evegnts:
+    for event in events:
         process_events(event)  # process events
         # if no exceptions were raised, we can assume all's good and we can remove from queue
         resp = queue.delete_message(event)
