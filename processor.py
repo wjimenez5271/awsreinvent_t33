@@ -2,8 +2,7 @@ import questions
 import users
 import db
 import queue
-import sys.exit
-from time import sleep
+
 
 def main():
     # get new message from queue
@@ -31,10 +30,4 @@ def main():
 
 
 if __name__ == '__main__':
-    try:
-        while True:
-            main()
-            sleep(20)
-    except KeyboardInterrupt:
-        print 'exiting'
-        exit(0)
+    main()
