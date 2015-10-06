@@ -2,10 +2,10 @@ import boto.sqs
 
 region = 'us-east-1'
 conn = boto.sqs.connect_to_region(region)
-queue_name = ""
+queue_name = "AnswersQueue"
 
 
-def process_events():
+def process_events(event):
     raise NotImplementedError
 
 
@@ -14,7 +14,7 @@ def get_queue():
     events = queue.get_messages()
     if len(events) == 0:
         print "Nothing to do. Bye."
-    for event in events:
+    for event in evegnts:
         process_events(event)  # process events
         # if no exceptions were raised, we can assume all's good and we can remove from queue
         resp = queue.delete_message(event)
@@ -24,4 +24,8 @@ def get_queue():
 
 def put_queue(data):
     queue = conn.get_queue(queue_name)
-    queue.send_message(queue_name, data)
+    print queue.id
+    conn.send_message(queue, data)
+
+put_queue({'id':'bar'})
+get_queue()
