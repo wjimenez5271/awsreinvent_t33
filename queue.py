@@ -6,7 +6,6 @@ queue_name = "AnswersQueue"
 
 
 def process_events(events, queue_name):
-
     for event in events:
         process_events(event)  # process events
         # if no exceptions were raised, we can assume all's good and we can remove from queue
@@ -34,5 +33,6 @@ def put_queue(data, queue_name):
     print queue.id
     conn.send_message(queue, data)
 
-put_queue({'id':'bar'})
-get_queue('AnswersQueue')
+#put_queue({'id':'bar'})
+for i in get_queue('AnswersQueue'):
+    print i.get_body()
