@@ -57,4 +57,8 @@ def write_question_to_db(question_string, question_answers, child_questions):
     return new_question.qid
 
 
+def get_first_question():
+    pass
+
+
 print write_question_to_db('foo',{'1':'bar'}, {'1':'barbaz'})

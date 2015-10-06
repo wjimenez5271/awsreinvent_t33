@@ -11,5 +11,5 @@ def put(data, table_name, overwrite=False):
 def get(table_name, **kwargs):
     assert type(table_name) == str
     table = Table(table_name)
-    return table.put_item(**kwargs)
+    return table.get_item(**kwargs)
 

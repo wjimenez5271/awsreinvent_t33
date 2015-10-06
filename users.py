@@ -2,7 +2,7 @@ import uuid
 import db
 
 
-class User(object):
+class EndUser(object):
     def __init__(self, uid, point_count=0, last_question=None, demographics=dict):
         self.uid = uid
         self.point_count = point_count
@@ -18,7 +18,7 @@ class User(object):
 
 def get_user(uid):
     r = db.get('users', uid=uid)
-    return User(uid,
+    return EndUser(uid,
                 point_count=r['point_count'],
                 last_question=r['last_question'],
                 demographics=r['demographics'])
