@@ -22,5 +22,6 @@ def get_queue():
             print "Cleanup completed successfully, removing message from queue."
 
 
-def put_queue():
-    raise NotImplementedError
+def put_queue(data):
+    queue = conn.get_queue(queue_name)
+    queue.send_message(queue_name, data)

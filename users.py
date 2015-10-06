@@ -1,7 +1,10 @@
+import uuid
+
+
 class User(object):
-    def __init__(self):
-        uid = None
-        point_count = None
+    def __init__(self, uid):
+        uid = uid
+        point_count = 0
         last_question = None
         demographics = {}
 
