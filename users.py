@@ -11,8 +11,8 @@ class User(object):
 
     def write(self):
         db.put({'uid':self.uid,
-                'point_count':self.point_count,
-                'last_question':self.last_question,
+                'point_count': self.point_count,
+                'last_question': self.last_question,
                 'demographics': self.demographics}, table_name='users')
 
 

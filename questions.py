@@ -5,11 +5,11 @@ import db
 class Question(object):
     def __init__(self, qstring, qid=None):
         if qid is None:
-            self.qid = uuid.uuid4()
+            self.qid = str(uuid.uuid4())
         else:
             self.qid = qid
         self.qstring = qstring
-        self.point_val = int
+        self.point_val = 0
         self.answers = {"answer_key": "value"}
         self.child_questions = {'answer_key': "qid"}
         self.last_updated = None
@@ -57,3 +57,4 @@ def write_question_to_db(question_string, question_answers, child_questions):
     return new_question.qid
 
 
+write_question_to_db('foo',{'1':'bar'},{'1':'barbaz'})
