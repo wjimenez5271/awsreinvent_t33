@@ -5,7 +5,7 @@
       "TwilioEC2Instance" : {
          "Type" : "AWS::EC2::Instance",
          "Properties" : {
-            "ImageId" : { "Fn::GetAtt": [ "AMIInfo", "Id" ] },
+            "ImageId" : "ami-e3106686",
             "KeyName" : "urmilKeyPair",
 			"NetworkInterfaces" : [{
 			  "AssociatePublicIpAddress" : "true",
@@ -22,14 +22,6 @@
 				 , {"Key" : "Stack", "Value" : "Production"}
 			]
          }
-      },
-  	  "AMIInfo": {
-		  "Type": "Custom::AMIInfo",
-		  "Properties": {
-			  "ServiceToken": "arn:aws:lambda:us-west-2:193129100670:function:LookupAMIID",
-			  "Region": { "Ref": "AWS::Region" },
-			  "InstanceType": "t2.micro"
-		  }
-	  }
+      }
    }
 }
