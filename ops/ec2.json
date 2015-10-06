@@ -21,10 +21,16 @@
 			],
         "UserData" : {"Fn::Base64" : {"Fn::Join" : ["", [
             "#include\n",
-            "https://github.com/wjimenez5271/awsreinvent_t33/blob/master/ops/twilio_start.sh \n"
+            "https://raw.githubusercontent.com/wjimenez5271/awsreinvent_t33/master/ops/twilio_start.sh \n"
             ] ] } }
 		  }
       }
+   },
+   "Outputs" : {
+	  "TwilioInstanceID" : {
+		"Description": "The Instance ID",  
+		"Value" : { "Ref" : "TwilioEC2Instance" }
+	  }
    }
 }
 
