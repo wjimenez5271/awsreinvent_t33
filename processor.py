@@ -2,13 +2,14 @@ import questions
 import users
 import db
 import queue
-
+import json
 
 def main():
     # get new message from queue
-    events = queue.get_queue('AnswersQueue')
+    events = queue.get_queue('IngressQueue')
     for event in events:
         d = event.get_body()
+        d = json.loads(d)
 
         uid = d['from']
         # lookup user
@@ -26,7 +27,7 @@ def main():
 
         next_question = questions.get_question(next_question_id)
         queue.put_queue({'to':uid,
-                         'message':next_question.qstring}, 'ResponseQueue')
+                         'message':next_question.qstring}, 'EgressQueue')
 
 
 if __name__ == '__main__':

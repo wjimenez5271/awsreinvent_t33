@@ -33,6 +33,3 @@ def put_queue(data, queue_name):
     print queue.id
     conn.send_message(queue, data)
 
-#put_queue({'id':'bar'})
-for i in get_queue('AnswersQueue'):
-    print i.get_body()
