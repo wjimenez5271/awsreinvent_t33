@@ -1,0 +1,35 @@
+{
+   "AWSTemplateFormatVersion" : "2010-09-09",
+   "Description" : "Ec2 Twilio Instance",
+   "Resources" : {
+      "TwilioEC2Instance" : {
+         "Type" : "AWS::EC2::Instance",
+         "Properties" : {
+            "ImageId" : { "Fn::GetAtt": [ "AMIInfo", "Id" ] },
+            "KeyName" : "urmilKeyPair",
+			"NetworkInterfaces" : [{
+			  "AssociatePublicIpAddress" : "true",
+			  "DeviceIndex"              : "0",
+			  "DeleteOnTermination"      : "true",
+			  "SubnetId"                 : "",
+			  "GroupSet"                 : [
+					"sg-0ede2e68"
+				]
+			}],
+			"IamInstanceProfile" : "TwilioUser",
+			"Tags" : [
+				 {"Key" : "Name", "Value" : "TwilioInstance"}
+				 , {"Key" : "Stack", "Value" : "Production"}
+			]
+         }
+      },
+  	  "AMIInfo": {
+		  "Type": "Custom::AMIInfo",
+		  "Properties": {
+			  "ServiceToken": "arn:aws:lambda:us-west-2:193129100670:function:LookupAMIID",
+			  "Region": { "Ref": "AWS::Region" },
+			  "InstanceType": "t2.micro"
+		  }
+	  }
+   }
+}
