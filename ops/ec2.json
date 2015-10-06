@@ -6,17 +6,15 @@
          "Type" : "AWS::EC2::Instance",
          "Properties" : {
             "ImageId" : "ami-e3106686",
+            "InstanceType" : "t2.micro",
             "KeyName" : "urmilKeyPair",
-			"NetworkInterfaces" : [{
-			  "AssociatePublicIpAddress" : "true",
-			  "DeviceIndex"              : "0",
-			  "DeleteOnTermination"      : "true",
-			  "SubnetId"                 : "",
-			  "GroupSet"                 : [
-					"sg-0ede2e68"
-				]
-			}],
-			"IamInstanceProfile" : "TwilioUser",
+			"NetworkInterfaces": [ {
+				  "AssociatePublicIpAddress": "true",
+				  "DeviceIndex": "0",
+				  "GroupSet": ["sg-0ede2e68"],
+				  "SubnetId": "subnet-5cf88a05"
+			} ],
+    		"IamInstanceProfile" : "TwilioUser",
 			"Tags" : [
 				 {"Key" : "Name", "Value" : "TwilioInstance"}
 				 , {"Key" : "Stack", "Value" : "Production"}
