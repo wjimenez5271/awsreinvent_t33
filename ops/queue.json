@@ -12,10 +12,16 @@
   },
  
   "Resources" : {
-    "MyQueue" : {
+    "IngressQueue" : {
       "Type" : "AWS::SQS::Queue",
       "Properties" : {
-         "QueueName" : "AnswersQueue"
+         "QueueName" : "IngressQueue"
+      }
+    },
+    "EgressQueue" : {
+      "Type" : "AWS::SQS::Queue",
+      "Properties" : {
+         "QueueName" : "EgressQueue"
       }
     },
     "AlarmTopic": {
@@ -35,7 +41,30 @@
         "MetricName": "ApproximateNumberOfMessagesVisible",
         "Dimensions": [{
           "Name": "QueueName",
-          "Value" : { "Fn::GetAtt" : ["MyQueue", "QueueName"] }
+          "Value" : { "Fn::GetAtt" : ["IngressQueue", "QueueName"] }
+        }],
+        "Statistic": "Sum",
+        "Period": "300",
+        "EvaluationPeriods": "1",
+        "Threshold": "10",
+        "ComparisonOperator": "GreaterThanThreshold",
+        "AlarmActions": [{
+          "Ref": "AlarmTopic"
+        }],
+        "InsufficientDataActions": [{
+          "Ref": "AlarmTopic"
+        }]
+      }
+    },
+    "QueueDepthAlarm": {
+      "Type": "AWS::CloudWatch::Alarm",
+      "Properties": {
+        "AlarmDescription": "Alarm if queue depth grows beyond 10 messages",
+        "Namespace": "AWS/SQS",
+        "MetricName": "ApproximateNumberOfMessagesVisible",
+        "Dimensions": [{
+          "Name": "QueueName",
+          "Value" : { "Fn::GetAtt" : ["EgressQueue", "QueueName"] }
         }],
         "Statistic": "Sum",
         "Period": "300",
@@ -52,17 +81,29 @@
     }
   },
   "Outputs" : {
-    "QueueURL" : {
-      "Description" : "URL of newly created SQS Queue",
-      "Value" : { "Ref" : "MyQueue" }
+    "IngressQueueURL" : {
+      "Description" : "URL of Ingress Queue",
+      "Value" : { "Ref" : "IngressQueue" }
     },
-    "QueueARN" : {
-      "Description" : "ARN of newly created SQS Queue",
-      "Value" : { "Fn::GetAtt" : ["MyQueue", "Arn"]}
+    "IngressQueueARN" : {
+      "Description" : "ARN of Ingress Queue",
+      "Value" : { "Fn::GetAtt" : ["IngressQueue", "Arn"]}
     },
-    "QueueName" : {
-      "Description" : "Name newly created SQS Queue",
-      "Value" : { "Fn::GetAtt" : ["MyQueue", "QueueName"]}
+    "IngressQueueName" : {
+      "Description" : "Name of Ingress Queue",
+      "Value" : { "Fn::GetAtt" : ["IngressQueue", "QueueName"]}
+    },
+    "EgressQueueURL" : {
+      "Description" : "URL of Egress Queue",
+      "Value" : { "Ref" : "EgressQueue" }
+    },
+    "EgressQueueARN" : {
+      "Description" : "ARN of Egress Queue",
+      "Value" : { "Fn::GetAtt" : ["EgressQueue", "Arn"]}
+    },
+    "EgressQueueName" : {
+      "Description" : "Name of Egress Queue",
+      "Value" : { "Fn::GetAtt" : ["EgressQueue", "QueueName"]}
     }
   }
 }
