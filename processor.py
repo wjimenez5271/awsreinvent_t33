@@ -2,6 +2,7 @@ import questions
 import users
 import queue
 import json
+import time.sleep
 
 from boto.dynamodb2.exceptions import ItemNotFound
 
@@ -54,4 +55,9 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    try:
+        while True:
+            main()
+            time.sleep(5)
+    except KeyboardInterrupt:
+        print 'exiting'

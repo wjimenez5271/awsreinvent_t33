@@ -30,8 +30,6 @@ def main():
 if __name__ == '__main__':
     ACCOUNT_SID = os.environ.get('twilio_sid')
     AUTH_TOKEN = os.environ.get('twilio_token')
-    if not ACCOUNT_SID or AUTH_TOKEN:
-        raise Exception('Unable to get Twilio credentials ')
     try:
         while True:
             main()
