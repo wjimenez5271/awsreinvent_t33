@@ -1,9 +1,7 @@
 import questions
 import users
-import db
 import queue
 import json
-import unicodedata
 
 from boto.dynamodb2.exceptions import ItemNotFound
 
@@ -12,13 +10,9 @@ def main():
     events = queue.get_queue('IngressQueue')
     for event in events:
         d = event.get_body()
-        d = d.encode('ascii','ignore')
-        d = d.replace('\\','')
-        d = d.split(':')
-        message = d[1].split(',')[0]
-        uid = d[2]
-        message = message.split("'")[1]
-        uid = uid.split("'")[1]
+        d = json.loads(d)
+        uid = d['from']
+        message = d['message']
 
         # lookup user
 
