@@ -61,4 +61,6 @@ def get_first_question():
     pass
 
 
-print write_question_to_db('foo',{'1':'bar'}, {'1':'barbaz'})
+print write_question_to_db('Why is the sky blue',{'1':'Because I said so',
+                                                  '2': 'I dont know'}, {'1':'guid of another question',
+                                                                        '2':'guid of another question'})
