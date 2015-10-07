@@ -18,6 +18,8 @@ def main():
 
         ACCOUNT_SID = os.environ.get('twilio_sid')
         AUTH_TOKEN = os.environ.get('twilio_token')
+        if ACCOUNT_SID or AUTH_TOKEN is None:
+            raise Exception('Unable to get Twilio credentials ')
         client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
 
         client.messages.create(
@@ -32,7 +34,7 @@ if __name__ == '__main__':
     try:
         while True:
             main()
-            sleep(20)
+            sleep(5)
     except KeyboardInterrupt:
         print 'exiting'
 

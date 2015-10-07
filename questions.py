@@ -38,11 +38,11 @@ class Question(object):
 
 def get_question(qid):
     r = db.get('questions', qid=qid)
-    return Question(r['qstring'], qid=qid)
+    q = Question(r['qstring'], qid=qid)
+    q.set_answers(r['answers'])
+    q.set_child_questions(r['child_questions'])
+    return q
 
-
-def process_question():
-    db.get('questions', qid="1")
 
 
 def get_next_question():
@@ -58,9 +58,9 @@ def write_question_to_db(question_string, question_answers, child_questions):
 
 
 def get_first_question():
-    pass
+     return get_question(qid='0588ebb9-f0a6-46c8-9a33-ec3c83c56945')
 
-
-print write_question_to_db('Why is the sky blue',{'1':'Because I said so',
+def test():
+     print write_question_to_db('Why is the sky blue',{'1':'Because I said so',
                                                   '2': 'I dont know'}, {'1':'guid of another question',
                                                                         '2':'guid of another question'})

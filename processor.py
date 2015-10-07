@@ -5,6 +5,14 @@ import json
 
 from boto.dynamodb2.exceptions import ItemNotFound
 
+
+def send_first_question(uid, event):
+    question = questions.get_first_question()
+    print question.qstring
+    queue.put_queue(json.dumps({'to': uid,
+                     'message': question.qstring}), 'EgressQueue')
+    queue.delete_from_queue(event, 'IngressQueue')
+
 def main():
     # get new message from queue
     events = queue.get_queue('IngressQueue')
@@ -23,20 +31,26 @@ def main():
 
         # process question
         if curr_user.last_question is None:
-            question = questions.get_first_question()
+            send_first_question(uid, event)
+            break
         else:
             question = questions.get_question(curr_user.last_question)
 
         for q, v in question.answers.iteritems():
-            if message == v:
+            if message.lower() == v[1].lower():
                 next_question_id = question.child_questions[q]
             else:
-                raise Exception
+                # invalid response
+                queue.put_queue(json.dumps({'to': uid,
+                 'message': "Sorry, that wasn't a valid response"}), 'EgressQueue')
+                queue.delete_from_queue(event, 'IngressQueue')
+                break
         # create response message & publish to queue
-
         next_question = questions.get_question(next_question_id)
-        queue.put_queue({'to': uid,
-                         'message': next_question.qstring}, 'EgressQueue')
+        queue.put_queue(json.dumps({'to': uid,
+                         'message': next_question.qstring}), 'EgressQueue')
+        queue.delete_from_queue(event, 'IngressQueue')
+
 
 
 if __name__ == '__main__':
