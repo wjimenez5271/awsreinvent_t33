@@ -16,10 +16,7 @@ def main():
         d = event.get_body()
         d = json.loads(d)
 
-        ACCOUNT_SID = os.environ.get('twilio_sid')
-        AUTH_TOKEN = os.environ.get('twilio_token')
-        if ACCOUNT_SID or AUTH_TOKEN is None:
-            raise Exception('Unable to get Twilio credentials ')
+
         client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
 
         client.messages.create(
@@ -31,6 +28,10 @@ def main():
 
 
 if __name__ == '__main__':
+    ACCOUNT_SID = os.environ.get('twilio_sid')
+    AUTH_TOKEN = os.environ.get('twilio_token')
+    if ACCOUNT_SID or AUTH_TOKEN is None:
+        raise Exception('Unable to get Twilio credentials ')
     try:
         while True:
             main()
