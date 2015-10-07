@@ -29,6 +29,8 @@ def delete_from_queue(event, queue_name):
         print "Cleanup completed successfully, removing message from queue."
 
 def put_queue(data, queue_name):
+    import json
+    assert json.loads(data)
     queue = conn.get_queue(queue_name)
     print queue.id
     conn.send_message(queue, data)
