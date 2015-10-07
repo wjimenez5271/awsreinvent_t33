@@ -24,5 +24,7 @@ pip install boto
 echo "2.4" >> /var/install.log
 pip install twilio
 echo "3. Twilio ready" >> /var/install.log
-python sms_server.py
+python sms_receiver.py &
+python sms_send.py
+
 echo "End" >> /var/install.log
